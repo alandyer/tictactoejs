@@ -10,14 +10,14 @@
   var turn = 1;
   var gameEnd = false; 
   $(document).ready(function() {
-    $("td").click(function() {
-      if(!$(this).is(":empty") || gameEnd)
+    $(".board-square").click(function() {
+      if(!$(this).val() === ' ' || gameEnd)
         return;
       if (turn === 1) {
         taketurn("X", this);
         turn = 2;
         if(checkwin("X")) {
-          $("body").append("<center><p id = 'win'>X Wins</p></center>");
+          $("body").append("<p align='center' id = 'win'>X Wins</p>");
           gameEnd = true;
         }
       }
@@ -25,13 +25,18 @@
         taketurn("O", this);
         turn = 1;
         if(checkwin("O")) {
-          $("body").append("<center><p id = 'win'>O Wins</p></center>");
+          $("body").append("<p align='center' id = 'win'>O Wins</p>");
           gameEnd= true;
         }
       }
     });
+    $("#new_game").click(function() {
+      new_game();
+    });
   });
-
+  
+      $(p).html(board[i]);
+    
   function taketurn(marker, p) {
     $(p).html(marker);
     var cell = $(p).attr("id");
@@ -57,23 +62,38 @@
 
     return false;
   }
+  function new_game() {
+    gameEnd = false;
+    for(var i = 0; i < board.length; i++) {
+      board[i] = "";
+    }
+    $("#win").remove();
+    $(".board-square").each(function() {
+      $(this).text(" ");
+    });
+    turn = 1;
+  }
 
 </script>
 
+<link rel="stylesheet" type="text/css" href="tictactoe.css">
 </head>
 <body>
-
-<header id="hello"></header>
-<center>
+<header id="hello"><h1><center><i>TicTacToe.js</i></center></h1></header>
+<table><tr><td class="button-td">
+    <div id="new_game" class="button">New Game</div>
+</td>
+<td>
 <table id="board" width = "400" height = "400" border="1"> 
-<tr id="r0" width="33%"><td id="0" width="33%"></td><td id="1" width="33%"></td><td id="2" width="33%"></td></tr>
-<tr id="r1" width="33%"><td id="3" width="33%"></td><td id="4" width="33%"></td><td id="5" width="33%"></td></tr>
-<tr id="r2" width="33%"><td id="6" width="33%"></td><td id="7" width="33%"></td><td id="8" width="33%"></td></tr>
+<tr id="r0" height="100"><td id="0" class="board-square" width="100" align="center">&nbsp;</td><td id="1" class="board-square" width="100" align="center">&nbsp;</td><td id="2" class="board-square" width="100" align="center">&nbsp;</td></tr>
+<tr id="r1" height="100"><td id="3" class="board-square" width="100" align="center">&nbsp;</td><td id="4" class="board-square" width="100" align="center">&nbsp;</td><td id="5" class="board-square" width="100" align="center">&nbsp;</td></tr>
+<tr id="r2" height="100"><td id="6" class="board-square" width="100" align="center">&nbsp;</td><td id="7" class="board-square" width="100" align="center">&nbsp;</td><td id="8" class="board-square" width="100" align="center">&nbsp;</td></tr>
 </table>
-</center>
+</td>
+</tr>
+</table>
 <div id="debug"></div>
 </body>
-
 </html>
 
 
